@@ -153,7 +153,7 @@ This repository contains a production-grade 🎛️ Verilog implementation of a 
 ## 📈 Results & Validation
 
 ### ✅ Test Cases
-| Scenario | Input | Expected Output | Verified |
+| Scenario | Input | Expected Output | Results |
 |----------|-------|-----------------|----------|
 | Exact Payment | Item5 (20) + 20 | Dispense5 + 0 | ✔️ |
 | Overpayment | Item3 (15) + 20 | Dispense3 + 5 | ✔️ |
