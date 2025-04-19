@@ -1,4 +1,4 @@
-# 🏗️ FPGA Vending Machine Controller - Digital IP Core
+# FPGA Vending Machine Controller - Digital IP Core
 
 ![System Architecture Diagram](/Assets/architecture_diagram.png)  
 *High-performance digital IP for automated retail systems*
