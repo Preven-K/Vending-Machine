@@ -161,20 +161,12 @@ This digital IP core provides a complete control solution for modern vending mac
 | Currency Validation | 3 cycles | Metastability protection |
 | Decision Latency | ≤8 cycles | Worst-case scenario |
 
-### Resource Utilization
-| Resource Type | Estimated Count |
-|--------------|----------------|
-| Configuration Registers | 1,024 |
-| Status Registers | 1,024 |
-| Synchronization Flip-Flops | 24 |
-| Combinational Logic Cells | ~2,500 |
 
 ## Future Enhancements
 
 ### Feature Roadmap
 1. **Payment Expansion**:
    - NFC/RFID payment support
-   - Cryptocurrency acceptance
    - Biometric authentication
 
 2. **Smart Features**:
@@ -182,13 +174,8 @@ This digital IP core provides a complete control solution for modern vending mac
    - Remote inventory monitoring
    - Dynamic pricing engine
 
-3. **Commercialization**:
-   - ASIC implementation (28nm process)
-   - PCIe interface module
-   - ISO 13422 certification
-
 ---
 *Developed as part of SURE ProEd's VLSI Design Internship Program*  
-*Documentation Rev 1.2 • Updated: August 2023*
+*Documentation Rev 1.2 • Updated: April 2025*
 
 [![License](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
