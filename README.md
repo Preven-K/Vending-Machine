@@ -1,179 +1,194 @@
-# 🏪 Vending Machine Controller - FPGA Verilog Core
+# FPGA Vending Machine Controller - Digital IP Core
 
-![Architecture Diagram](https://via.placeholder.com/800x400?text=System+Architecture+Diagram)  
-*Configurable digital IP core for automated retail systems with multi-clock domain operation*
+![Vending Machine System Diagram](https://via.placeholder.com/800x400?text=Vending+Machine+System+Architecture)  
+*Configurable digital controller IP for commercial vending machines*
 
-**Key Metrics**  
-✅ **Max Items**: 1,024 (Parameterized)  
-✅ **Currency Support**: 6 Denominations  
-✅ **Clock Domains**: 3 (100MHz Sys, 50MHz Config, 10KHz-50MHz Async)  
-✅ **Latency**: <10 clock cycles  
+**Domain**: VLSI Design / FPGA Development / Embedded Systems  
+**Technology**: Hardware Description Language (HDL)  
+**Compliance**: AMBA APB Protocol  
 
-## 📋 Table of Contents
-1. [Project Overview](#-project-overview)
-2. [Technical Specifications](#-technical-specifications)
-3. [Architecture](#-architecture)
-4. [Interface Protocol](#-interface-protocol)
-5. [Configuration Memory Map](#-configuration-memory-map)
-6. [Operation Modes](#-operation-modes)
-7. [Simulation Verification](#-simulation-verification)
-8. [FPGA Implementation](#-fpga-implementation)
-9. [Future Roadmap](#-future-roadmap)
+## Project Specification
+Developed during SURE ProEd Integrated VLSI Internship  
+**Technical Leads**:  
+- Satish D, Nikhil B. Venkat  
+- Devi Prasad, Bhaskar, Gopi, Chetan  
+
+## Table of Contents
+1. [Introduction](#introduction)
+2. [Key Features](#key-features)
+3. [System Architecture](#system-architecture)
+4. [Interface Specifications](#interface-specifications)
+5. [Configuration Protocol](#configuration-protocol)
+6. [Operational States](#operational-states)
+7. [Performance Metrics](#performance-metrics)
+8. [Future Enhancements](#future-enhancements)
+
+## Introduction
+This digital IP core provides a complete control solution for modern vending machines, featuring:
+
+- Multi-item inventory management (1024 unique products)
+- Flexible currency handling with six standard denominations
+- Real-time stock tracking (dispensed/available counts)
+- Secure APB configuration interface
+- Robust synchronization across asynchronous clock domains
+
+## Key Features
+
+### Core Specifications
+| Parameter | Value |
+|-----------|-------|
+| System Clock Frequency | 100MHz ±5% |
+| Configuration Interface Speed | 50MHz |
+| Currency Input Range | 10KHz - 50MHz |
+| Maximum Items Supported | 1024 (configurable) |
+| Maximum Currency Value | 100 units |
+| Transaction Latency | ≤10 clock cycles |
+| Supported Denominations | 5, 10, 15, 20, 50, 100 units |
+
+### Advanced Functionality
+- **Dynamic Inventory Control**:
+  - Per-item pricing
+  - Real-time stock monitoring
+  - Reserved "empty item" indication (code 1023)
+
+- **Financial Integrity**:
+  - Exact change calculation
+  - Immediate refund for invalid currency
+  - Overpayment handling
+
+- **Reliable Operation**:
+  - Three-stage state machine
+  - Metastability-protected inputs
+  - Fail-safe reset behavior
+
+## System Architecture
+
+### Block Diagram
+![Detailed Component Diagram](https://via.placeholder.com/600x400?text=Controller+Block+Diagram)
+
+### Functional Units
+1. **Central Controller**  
+   - Finite State Machine (Reset/Config/Operational modes)
+   - Transaction processing engine
+   - Error handling subsystem
+
+2. **Memory Organization**  
+   - 32-bit wide configuration registers
+   - Dual-port inventory memory (1024 entries)
+   - Write-protected dispense counters
+
+3. **Clock Domain Bridges**  
+   - Currency input synchronization
+   - APB interface timing control
+   - Pulse width adaptation
+
+## Interface Specifications
+
+### Control Interfaces
+| Signal | Direction | Description |
+|--------|-----------|-------------|
+| clk | Input | 100MHz system clock |
+| rstn | Input | Asynchronous active-low reset |
+| cfg_mode | Input | Configuration mode selector |
+
+### Transaction Interfaces
+**Currency Input**:
+- `currency_valid`: Single-cycle pulse in currency clock domain
+- `currency_value`: Binary encoded denomination (3-7 bits)
+
+**Product Selection**:
+- `item_select`: Encoded product ID (10 bits)
+- `item_select_valid`: Selection acknowledgement pulse
+
+### APB Configuration Bus
+| Signal | Function |
+|--------|----------|
+| pclk | 50MHz configuration clock |
+| paddr | 15-bit register address |
+| pwdata | 32-bit write data |
+| prdata | 32-bit read data |
+| pready | Transfer ready indicator |
+
+## Configuration Protocol
+
+### Memory Map
+| Address Range | Function |
+|--------------|----------|
+| 0x4000_0000 | Global configuration |
+| 0x4000_0004 - 0x4000_0FFC | Item configurations (1024 entries) |
+
+### Register Structure
+**Item Configuration Format**:
+| Bit Range | Field | Access | Description |
+|-----------|-------|--------|-------------|
+| 31-24 | dispensed_count | RO | Total units sold |
+| 23-16 | available_count | RW | Current stock |
+| 15-0 | item_price | RW | Current price |
+
+## Operational States
+
+### 1. Reset Mode
+- Initializes all registers to default values
+- Holds outputs in safe state
+- Maintains low-power profile
+
+### 2. Configuration Mode
+**Vendor Workflow**:
+1. Activate cfg_mode signal
+2. Load item prices via APB writes
+3. Set initial stock levels
+4. Deactivate cfg_mode to begin operations
+
+**Typical Sequence**:
+- Address: 0x4000_0004 (Item 0)
+- Data: 0x000A0014 (10 available, price 20)
+
+### 3. Operation Mode
+**Customer Transaction Flow**:
+1. Product selection (item_select + valid pulse)
+2. Currency insertion (multiple denominations accepted)
+3. System response:
+   - Successful: Product dispense + change
+   - Out-of-stock: Empty code + refund
+   - Invalid currency: Immediate refund
+
+## Performance Metrics
+
+### Timing Characteristics
+| Parameter | Value | Condition |
+|-----------|-------|-----------|
+| Config Write Latency | 2 cycles | APB interface |
+| Currency Validation | 3 cycles | Metastability protection |
+| Decision Latency | ≤8 cycles | Worst-case scenario |
+
+### Resource Utilization
+| Resource Type | Estimated Count |
+|--------------|----------------|
+| Configuration Registers | 1,024 |
+| Status Registers | 1,024 |
+| Synchronization Flip-Flops | 24 |
+| Combinational Logic Cells | ~2,500 |
+
+## Future Enhancements
+
+### Feature Roadmap
+1. **Payment Expansion**:
+   - NFC/RFID payment support
+   - Cryptocurrency acceptance
+   - Biometric authentication
+
+2. **Smart Features**:
+   - Machine learning demand prediction
+   - Remote inventory monitoring
+   - Dynamic pricing engine
+
+3. **Commercialization**:
+   - ASIC implementation (28nm process)
+   - PCIe interface module
+   - ISO 13422 certification
 
 ---
+*Developed as part of SURE ProEd's VLSI Design Internship Program*  
+*Documentation Rev 1.2 • Updated: August 2023*
 
-## 🚀 Project Overview
-**Developed during SURE ProEd VLSI Internship**  
-*Authors: Satish D, Nikhil B. Venkat, Devi Prasad, Bhaskar, Gopi, Chetan*
-
-Industrial-grade vending machine controller IP featuring:
-- **Multi-Item Inventory**: Track 1024 unique SKUs
-- **Smart Currency Handling**: 5/10/15/20/50/100 denominations
-- **APB Configuration**: ARM-compatible interface
-- **Fail-Safe Operation**: Guaranteed change return
-
-```verilog
-module vending_machine #(
-    parameter MAX_ITEMS = 1024,
-    parameter MAX_CURRENCY = 100
-)(
-    // [Interface ports...]
-);
-```
-⚙ Technical Specifications
-Clock Domains
-Domain	Frequency	Purpose
-System	100MHz	Main state machine
-Config	50MHz	APB register access
-Currency	10KHz-50MHz	Async user input
-Performance Characteristics
-Transaction Latency: 8 cycles (80ns @ 100MHz)
-
-Memory Utilization: 32KB (1024 items × 32b)
-
-Throughput: 12.5M transactions/sec
-
-Supported Features
-✔ Dynamic item pricing
-
-✔ Real-time inventory tracking
-
-✔ Invalid currency rejection
-
-✔ Out-of-stock detection
-
-✔ Low-power sleep modes
-
-🏗 Architecture
-Block Diagram
-Detailed Block Diagram
-
-Core Components:
-
-Finite State Machine
-
-Diagram
-Code
-
-
-
-
-
-
-Clock Domain Crossing
-
-Dual-stage synchronizers
-
-Glitch-free pulse converters
-
-APB Interface
-
-AMBA 3 compliant
-
-32-bit data bus
-
-15-bit address space
-
-🔌 Interface Protocol
-Signal Matrix
-Interface	Key Signals	Width	Description
-System	clk, rstn	1b	100MHz clock + reset
-Currency	currency_valid, value	7b	Async money input
-Item Select	item_sel, sel_valid	10b	Product selection
-APB Config	paddr, pwdata	15b,32b	Register programming
-Dispense	disp_valid, change	1b,7b	Output control
-Timing Diagram:
-APB Timing
-
-🗄 Configuration Memory Map
-Register Hierarchy
-Address Range	Register	Access	Description
-0x4000_0000	CFG_CTRL	RW	Global control
-0x4000_0004	ITEM_CFG[0]	RW	Item 0 config
-...	...	...	...
-0x4000_0FFC	ITEM_CFG[1023]	RW	Item 1023 config
-Item Configuration Format:
-
-31           24 23          16 15           0
-+---------------+--------------+---------------+
-| Dispensed (RO)| Available (RW)| Price (RW)    |
-+---------------+--------------+---------------+
-🔄 Operation Modes
-Configuration Mode (cfg_mode=1)
-python
-# Sample APB Write Sequence
-write(addr=0x4000_0004, data=0x000A0014) # 10 available, price=20
-write(addr=0x4000_0008, data=0x0005001E) # 5 available, price=30
-Operation Mode (cfg_mode=0)
-Transaction Flow:
-
-User selects product (item_select_valid=1)
-
-Inserts money (currency_valid pulses)
-
-System responds within 80ns:
-
-item_dispense_valid pulse
-
-Product code or EMPTY_ITEM (1023)
-
-Exact change (if any)
-
-📊 Simulation Verification
-Test Cases
-Case	Description	Expected Result
-TC1	Exact payment	Dispense + no change
-TC2	Overpayment	Dispense + change
-TC3	Invalid currency	Immediate refund
-TC4	Out-of-stock	Empty item code
-Waveform Example:
-Simulation Wave
-
-🔧 FPGA Implementation
-Xilinx Artix-7 Utilization
-Resource	Used	Available	Utilization
-LUTs	1,203	63,400	1.9%
-FFs	897	126,800	0.7%
-BRAM	8	135	5.9%
-Timing Closure:
-
-Worst Negative Slack: 0.312ns
-
-Fmax: 142MHz
-
-🛣 Future Roadmap
-Near-Term (Q4 2023)
-PCIe interface prototype
-
-Machine learning demand prediction
-
-Mid-Term (2024)
-28nm ASIC tapeout
-
-ISO 9001 certification
-
-Long-Term
-Blockchain payment integration
-
-AR product visualization
-
+[![License](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
