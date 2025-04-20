@@ -47,7 +47,7 @@ This repository contains a production-grade 🎛️ Verilog implementation of a 
 
 
 <div align="center">
-  <img src="https://github.com/sure-trust/PREVEN-K-g3-integrated-vlsi/blob/main/Course%20report/Architecture/General%20Block%20Diagram.png?raw=true" alt="System Architecture" width="600">
+  <img src="[https://github.com/sure-trust/PREVEN-K-g3-integrated-vlsi/blob/main/Course%20report/Architecture/General%20Block%20Diagram.png?raw=true" alt="System Architecture](https://github.com/Preven-K/Vending-Machine/blob/main/Architecture/General%20Block%20Diagram.png?raw=true)" width="600">
 </div>
 
 ### 🛡️ Reliability Features
