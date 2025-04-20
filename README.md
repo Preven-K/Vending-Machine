@@ -61,12 +61,12 @@ This repository contains a production-grade 🎛️ Verilog implementation of a 
 ## 📊 Visual Documentation
 
 ### 🏗️ Block Diagram
-![System Block Diagram](https://github.com/sure-trust/PREVEN-K-g3-integrated-vlsi/blob/main/Course%20report/Architecture/Block%20Diagram.png?raw=true)
+![System Block Diagram](https://github.com/Preven-K/Vending-Machine/blob/main/Architecture/Block%20Diagram.png?raw=true)
 
 
 ### ⏱️ Timing Diagrams
-![Timing Diagram](https://github.com/sure-trust/PREVEN-K-g3-integrated-vlsi/blob/main/Course%20report/Architecture/Timing_Diagram1.jpg?raw=true)
-![image alt](https://github.com/sure-trust/PREVEN-K-g3-integrated-vlsi/blob/main/Course%20report/Architecture/Timing_Diagram2.jpg?raw=true)
+![Timing Diagram](https://github.com/Preven-K/Vending-Machine/blob/main/Architecture/Timing_Diagram1.jpg?raw=true)
+![image alt](https://github.com/Preven-K/Vending-Machine/blob/main/Architecture/Timing_Diagram2.jpg?raw=true)
 
 ## 🏛️ System Architecture
 ### Finite State Machine
@@ -135,11 +135,9 @@ This repository contains a production-grade 🎛️ Verilog implementation of a 
 ### 📊 Simulation Outputs
 
 #### 📦 Test Plan
-![Test Plan](https://github.com/sure-trust/PREVEN-K-g3-integrated-vlsi/blob/main/Course%20report/Outputs/Test%20Plan.png?raw=true) 
-
+![Test Plan](https://github.com/Preven-K/Vending-Machine/blob/main/Outputs/Test%20Plan.png?raw=true)
 #### 💰 Results 
-![Output Simulation](https://github.com/sure-trust/PREVEN-K-g3-integrated-vlsi/blob/main/Course%20report/Outputs/Simulation%20Output.png?raw=true) 
-
+![Output Simulation](https://github.com/Preven-K/Vending-Machine/blob/main/Outputs/Simulation%20Output.png?raw=true)
 
 ## 🔮 Future Scope
    - 🏧 NFC/RFID interface
