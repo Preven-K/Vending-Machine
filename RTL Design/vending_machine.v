@@ -15,7 +15,7 @@ module vending_machine #(
     output reg [31:0] prdata,   
     output reg pready,  
 
-    input wire currency_clk,      // 50MHz for currency input
+    input wire currency_clk,      // 5MHz for currency input
     input wire currency_valid,    
     input wire [$clog2(MAX_CURRENCY)-1:0] currency_value, 
     input wire item_select_valid,  
@@ -29,7 +29,7 @@ module vending_machine #(
     localparam RESET = 2'b00;
     localparam CONFIG_MODE = 2'b01;
     localparam OPERATION_MODE = 2'b10;
-    localparam EMPTY_ITEM = MAX_ITEMS - 1;
+    localparam EMPTY_ITEM = MAX_ITEMS - 1; // 11111111
 
 
     reg [1:0] state;
@@ -37,18 +37,21 @@ module vending_machine #(
     reg [$clog2(MAX_ITEMS)-1:0] selected_item;
     reg item_selected;
 
-    // CDC synchronization
-    reg currency_valid_sync1, currency_valid_sync2;
-    reg [$clog2(MAX_CURRENCY)-1:0] currency_value_sync1, currency_value_sync2;
-    reg currency_valid_pulse;
-    
     wire [15:0] item_price = memory[selected_item][15:0];
     wire [7:0] available_items = memory[selected_item][23:16];
     wire [7:0] dispensed_items = memory[selected_item][31:24];
+    
+
      
     integer i;
     reg [7:0] new_dispensed_items;
     reg [7:0] new_available_items;
+    
+    // CDC synchronization
+    reg currency_valid_sync1, currency_valid_sync2;
+    reg [$clog2(MAX_CURRENCY)-1:0] currency_value_sync1, currency_value_sync2;
+    reg currency_valid_pulse;
+
 
     // Clock Domain Crossing
     always @(posedge currency_clk or negedge rstn) begin
@@ -76,7 +79,6 @@ module vending_machine #(
     always @(posedge clk or negedge rstn) begin
         if (!rstn) begin
             state <= RESET;
-            currency_valid_sync2 <= 0;
             item_dispense_valid <= 0;
             currency_change <= 0;
             item_dispense <= 0;
@@ -157,6 +159,8 @@ module vending_machine #(
                         end
                         
                     end
+                   if (cfg_mode) state <= OPERATION_MODE;
+
                 end 
             endcase
         end

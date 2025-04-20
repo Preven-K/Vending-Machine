@@ -52,7 +52,7 @@ module tb_vending_machine;
     // Clock generation
     always #5 clk = ~clk; // 100MHz system clock
     always #50 pclk = ~pclk;// 10MHz config clock
-    always #100 currency_clk = ~currency_clk;// 50MHz currency clock
+    always #100 currency_clk = ~currency_clk;// 5MHz currency clock
 
     initial begin
         clk = 0;
@@ -124,17 +124,16 @@ module tb_vending_machine;
         cfg_mode = 0; 
         pwrite = 0; 
         #50;
-    
     // Test 1
     @(posedge clk);
     item_select_valid = 1;
-    item_select = 10'd4; // Item 4 (price=50)
+    item_select = 10'd2; // Item 2
     @(posedge clk);
     item_select_valid = 0;
     #1000;
     @(posedge currency_clk);
     currency_valid = 1;
-    currency_value = 7'd50; // currency = 50rs
+    currency_value = 7'd99; // currency = 99rs
     @(posedge currency_clk);
     currency_valid = 0;
     #1000; 
@@ -142,8 +141,7 @@ module tb_vending_machine;
     // Test 2
     @(posedge clk);
     item_select_valid = 1;
-    item_select = 10'd3; // Item 3 (price 40)
-    @(posedge clk);
+    item_select = 10'd2; // Item 2
     item_select_valid = 0;
     #1000;
     @(posedge currency_clk);
@@ -156,21 +154,27 @@ module tb_vending_machine;
     // Test 3
     @(posedge clk);
     item_select_valid = 1;
-    item_select = 10'd6; // Item 6 - Invalid item
-    @(posedge clk);
-    item_select_valid = 0;
-    #1000;
-    
-    // Test 4
-    @(posedge clk);
-    item_select_valid = 1;
-    item_select = 10'd2; // Item 2 (price=30)
+    item_select = 10'd3; // Item 3 
     @(posedge clk);
     item_select_valid = 0;
     #1000;
     @(posedge currency_clk);
     currency_valid = 1;
-    currency_value = 7'd10; // rs 10
+    currency_value = 7'd50; // rs 50
+    @(posedge currency_clk);
+    currency_valid = 0;
+    #1000;
+    
+    // Test 4
+    @(posedge clk);
+    item_select_valid = 1;
+    item_select = 10'd1; // Item 1 
+    @(posedge clk);
+    item_select_valid = 0;
+    #1000;
+    @(posedge currency_clk);
+    currency_valid = 1;
+    currency_value = 7'd5; // rs 5
     @(posedge currency_clk);
     currency_valid = 0;
     #1000;
@@ -179,13 +183,13 @@ module tb_vending_machine;
     // Test 5
     @(posedge clk);
     item_select_valid = 1;
-    item_select = 10'd0; // Item 0 (price 10)
+    item_select = 10'd4; // Item 4
     @(posedge clk);
     item_select_valid = 0;
     #1000;
     @(posedge currency_clk);
     currency_valid = 1;
-    currency_value = 7'd13; // rs 13 not correct 
+    currency_value = 7'd50; // rs 50 
     @(posedge currency_clk);
     currency_valid = 0;
     #1000;
@@ -193,7 +197,7 @@ module tb_vending_machine;
         // Test 6: 
     @(posedge clk);
     item_select_valid = 1;
-    item_select = 10'd3; // Item 3 (price 40)
+    item_select = 10'd4; // Item 4
     @(posedge clk);
     item_select_valid = 0;
     #1000;
@@ -206,29 +210,18 @@ module tb_vending_machine;
         // Test 7: 
     @(posedge clk);
     item_select_valid = 1;
-    item_select = 10'd3; // Item 3 (price 40)
+    item_select = 10'd6; // Item 6
     @(posedge clk);
     item_select_valid = 0;
     #1000;
     @(posedge currency_clk);
     currency_valid = 1;
-    currency_value = 7'd30; // 30 - not sufficient
+    currency_value = 7'd100; // rs 100
     @(posedge currency_clk);
     currency_valid = 0;
-    #1000;    
-        // Test 8: 
-    @(posedge clk);
-    item_select_valid = 1;
-    item_select = 10'd3; // Item 3 (price 40)
-    @(posedge clk);
-    item_select_valid = 0;
     #1000;
-    @(posedge currency_clk);
-    currency_valid = 1;
-    currency_value = 7'd50; // rs 50
-    @(posedge currency_clk);
-    currency_valid = 0;
-    #1000;    
+   
+
     
 
     #5000;
