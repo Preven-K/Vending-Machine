@@ -12,7 +12,7 @@
 
 **Domain**: 🖥️ VLSI Design / 🧮 FPGA Development  
 **Technology**: 🔌 Verilog  
-**Compliance**: 📜 APB Protocol (ARM IHI 0024B)  
+**Compliance**: 📜 APB Protocol 
 
 ## 📋 Table of Contents
 1. [🚀 Introduction](#-introduction)
