@@ -1,23 +1,28 @@
-# FPGA Vending Machine Controller - Digital IP Core
+<div align="center">
+   <img src='https://user-images.githubusercontent.com/73131499/166115643-d3187f47-d38f-41b2-ae42-5ecbbc60de14.png' />
 
-![System Architecture Diagram](/Assets/architecture_diagram.png)  
-*High-performance digital IP for automated retail systems*
+
+<h3 align="center">SURE ProEd (SURE Trust) - Skill Upgradation for Rural-youth Empowerment Trust</h3>
+  <h2> G3 Integerated VLSI </h2>
+</div>
+
+# PREVEN-K-G3-Integrated-VLSI
+
+## FPGA Vending Machine Controller
 
 **Domain**: 🖥️ VLSI Design / 🧮 FPGA Development  
-**Technology**: 🔌 Verilog HDL (IEEE 1364-2005)  
-**Compliance**: 📜 AMBA APB Protocol (ARM IHI 0024B)  
+**Technology**: 🔌 Verilog  
+**Compliance**: 📜 APB Protocol (ARM IHI 0024B)  
 
 ## 📋 Table of Contents
-1. [🚀 Introduction](#introduction)
-2. [✨ Key Features](#key-features)
-3. [📊 Visual Documentation](#visual-documentation)
-4. [🏛️ System Architecture](#system-architecture)
-5. [🔌 Interface Specifications](#interface-specifications)
-6. [⚙️ Configuration Protocol](#configuration-protocol)
-7. [⏱️ Performance Metrics](#performance-metrics)
-8. [📈 Results & Validation](#results)
-9. [🔮 Future Scope](#future-scope)
-10. [🧑💻 Getting Started](#getting-started)
+1. [🚀 Introduction](#-introduction)
+2. [✨ Key Features](#-key-features)
+3. [📊 Visual Documentation](#-visual-documentation)
+4. [🏛️ System Architecture](#-system-architecture)
+5. [🔌 Interface Specifications](#-interface-specifications)
+6. [⚙️ Configuration Protocol](#️-configuration-protocol)
+7. [📈 Results & Validation](#-results--validation)
+8. [🔮 Future Scope](#-future-scope)
 
 ## 🚀 Introduction
 This repository contains a production-grade 🎛️ Verilog implementation of a vending machine controller IP core with:
@@ -40,6 +45,11 @@ This repository contains a production-grade 🎛️ Verilog implementation of a 
 | ⚡ Transaction Latency | <10 clock cycles | Worst-case scenario |
 | 🔢 Supported Denominations | 5, 10, 15, 20, 50, 100 | Hard-coded in FSM |
 
+
+<div align="center">
+  <img src="https://github.com/sure-trust/PREVEN-K-g3-integrated-vlsi/blob/main/Course%20report/Architecture/General%20Block%20Diagram.png?raw=true" alt="System Architecture" width="600">
+</div>
+
 ### 🛡️ Reliability Features
 - 🧊 Metastability-protected inputs (2-stage synchronizers)
 - 🔄 Automatic inventory reconciliation
@@ -51,42 +61,20 @@ This repository contains a production-grade 🎛️ Verilog implementation of a 
 ## 📊 Visual Documentation
 
 ### 🏗️ Block Diagram
-![System Block Diagram](/Assets/block_diagram.png)  
-*Complete data path with clock domain crossings*
+![System Block Diagram](https://github.com/sure-trust/PREVEN-K-g3-integrated-vlsi/blob/main/Course%20report/Architecture/Block%20Diagram.png?raw=true)
+
 
 ### ⏱️ Timing Diagrams
-#### ✅ Successful Transaction
-![Happy Path Timing](/Assets/timing_normal.png)  
-*1. Item selection → 2. Currency insertion → 3. Product dispense*
-
-#### ❌ Error Cases
-![Error Handling](/Assets/timing_error.png)  
-*Left: Invalid currency | Right: Out-of-stock item*
-
-### 📊 Simulation Outputs
-#### 📦 Inventory Management
-![Inventory Console](/Assets/inventory_console.png)  
-*Real-time stock monitoring output*
-
-#### 💰 Change Calculation
-![Change Simulation](/Assets/change_simulation.png)  
-*Exact change computation waveform*
+![Timing Diagram](https://github.com/sure-trust/PREVEN-K-g3-integrated-vlsi/blob/main/Course%20report/Architecture/Timing_Diagram1.jpg?raw=true)
+![image alt](https://github.com/sure-trust/PREVEN-K-g3-integrated-vlsi/blob/main/Course%20report/Architecture/Timing_Diagram2.jpg?raw=true)
 
 ## 🏛️ System Architecture
-
 ### Finite State Machine
 | State Code | Mode | Description |
 |------------|------|-------------|
 | 00 | RESET | Initialization state, all registers cleared |
 | 01 | CONFIG | APB interface active for inventory setup |
 | 10 | OPERATION | Normal vending machine operation |
-
-### 📦 Memory Organization
-| Memory Block | Size | Function |
-|--------------|------|----------|
-| Item Config | 1024×32b | Price + stock tracking |
-| Transaction Log | 256×64b | Audit trail buffer |
-| Currency Buffer | 8×16b | Temporary change storage |
 
 ## 🔌 Interface Specifications
 
@@ -134,24 +122,8 @@ This repository contains a production-grade 🎛️ Verilog implementation of a 
 | 23-16 | AVAILABLE | RW | Current stock |
 | 15-0 | PRICE | RW | Item value |
 
-## ⏱️ Performance Metrics
-
-### 🔧 Resource Utilization (Xilinx Artix-7)
-| Resource | Used | Available | Utilization |
-|----------|------|-----------|-------------|
-| LUTs | 1,243 | 63,400 | 2% |
-| FFs | 897 | 126,800 | <1% |
-| BRAM | 4 | 135 | 3% |
-
-### ⏲️ Timing Performance
-| Path | Slack | Clock Cycles |
-|------|-------|--------------|
-| Currency to Output | 2.1ns | 3 |
-| Config Write | 1.8ns | 2 |
-| Item Selection | 3.2ns | 4 |
 
 ## 📈 Results & Validation
-
 ### ✅ Test Cases
 | Scenario | Input | Expected Output | Results |
 |----------|-------|-----------------|----------|
@@ -160,15 +132,16 @@ This repository contains a production-grade 🎛️ Verilog implementation of a 
 | Out-of-Stock | Item10 (0) + 50 | Empty(1023) + 50 | ❌ |
 | Invalid Currency | Item2 + 13 | Empty(1023) + 13 | ❌ |
 
-## 🔮 Future Scope
-1. **Payment Expansion**
-   - 🏧 NFC/RFID interface
-   - ₿ Cryptocurrency support
-   - 👆 Biometric authentication
+### 📊 Simulation Outputs
 
-2. **Smart Features**
-   - 🤖 ML demand prediction
+#### 📦 Test Plan
+![Test Plan](https://github.com/sure-trust/PREVEN-K-g3-integrated-vlsi/blob/main/Course%20report/Outputs/Test%20Plan.png?raw=true) 
+
+#### 💰 Results 
+![Output Simulation](https://github.com/sure-trust/PREVEN-K-g3-integrated-vlsi/blob/main/Course%20report/Outputs/Simulation%20Output.png?raw=true) 
+
+
+## 🔮 Future Scope
+   - 🏧 NFC/RFID interface
    - 📱 Remote inventory monitoring
    - 💹 Dynamic pricing engine
-
-
