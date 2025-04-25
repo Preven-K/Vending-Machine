@@ -28,9 +28,6 @@
 This repository contains a production-grade 🎛️ Verilog implementation of a vending machine controller IP core with:
 
 - ⏱️ Multi-clock domain operation:
-  - 100MHz system clock (±50ppm stability)
-  - 50MHz APB configuration interface
-  - 10KHz-50MHz asynchronous currency input
 - 📦 1024-item inventory management
 - 💰 Six currency denomination support with smart change calculation
 - 🔒 Built-in error handling mechanisms
